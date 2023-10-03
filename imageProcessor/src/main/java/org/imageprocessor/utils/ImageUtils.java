@@ -87,7 +87,6 @@ public class ImageUtils {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 int grayValue = grayMatrix[x][y];
-                // Setando valores do RED (16) GREEN (8) e BLUE
                 int rgbValue = (grayValue << 16) | (grayValue << 8) | grayValue;
                 image.setRGB(x, y, rgbValue);
             }
@@ -111,6 +110,51 @@ public class ImageUtils {
 
     public static int getMinValue(int value1, int value2) {
         return Math.min(value1, value2);
+    }
+
+    public static Image applyFilterInImage(Image image, int bounds, Operation operation) {
+        Image imageResult = new Image();
+        imageResult.setRed(filterSingleMatrix(image.getRed(), bounds, operation));
+        imageResult.setGreen(filterSingleMatrix(image.getGreen(), bounds, operation));
+        imageResult.setBlue(filterSingleMatrix(image.getBlue(), bounds, operation));
+        return imageResult;
+    }
+
+    private static int[][] filterSingleMatrix(int[][] matrix, Integer bounds, Operation operation) {
+        int width = matrix.length;
+        int height = matrix[0].length;
+        int[][] filteredMatrix = new int[width][height];
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                Integer[][] focus = getFocus(matrix, bounds, x, y);
+                filteredMatrix[x][y] = operation.getResult(focus, bounds);
+            }
+        }
+
+        return filteredMatrix;
+    }
+
+    private static Integer[][] getFocus(int[][] matrix, Integer bounds, int posX, int posY) {
+        Integer[][] focus = new Integer[bounds][bounds];
+
+        for (int y = 0; y < bounds; y++) {
+            for (int x = 0; x < bounds; x++) {
+                int posFocusX = posX + (x - bounds);
+                int posFocusY = posY + (y - bounds);
+                if (isPositionValid(matrix, posFocusX, posFocusY)) {
+                    focus[x][y] = matrix[posFocusX][posFocusY];
+                }
+            }
+        }
+        return focus;
+    }
+
+    private static boolean isPositionValid(int[][] matrix, int posX, int posY) {
+        int width = matrix.length;
+        int height = matrix[0].length;
+
+        return posX >= 0 && posX < width && posY >= 0 && posY < height;
     }
 
     public static Image doOperationInImages(Image image1, Image image2, Integer coeficient, Operation operation) {
@@ -151,17 +195,14 @@ public class ImageUtils {
 
         for (int y = 0; y < minHeight; y++) {
             for (int x = 0; x < minWidth; x++) {
-                // Faz as operações
                 int opResult;
                 opResult = operation.getResult(matrix1[x][y], matrix2[x][y], coeficient);
                 result[x][y] = getValueInBounds(opResult);
             }
             for (int x1 = minWidth; x1 < maxWidth; x1++) {
-                // Preenche os valores a direita com os valores da matriz mais larga
                 result[x1][y] = widerMatrix[x1][y];
             }
         }
-        // Preenche os valores embaixo com os valores da matriz mais alta
         for (int y1 = minHeight; y1 < maxHeight; y1++) {
             for (int x = 0; x < tallerMatrix.length; x++) {
                 result[x][y1] = tallerMatrix[x][y1];
@@ -177,7 +218,6 @@ public class ImageUtils {
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                // Faz as operações
                 result[x][y] = getValueInBounds(operation.getResult(matrix[x][y], value, coeficient));
             }
         }
