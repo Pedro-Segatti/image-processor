@@ -6,6 +6,7 @@ package org.imageprocessor.views;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import org.imageprocessor.models.Image;
 import org.imageprocessor.utils.ImageUtils;
 import org.imageprocessor.utils.Operation;
@@ -18,13 +19,18 @@ public class main extends javax.swing.JFrame {
 
     private Image imageA;
     private Image imageB;
-    private Image imageResult;
 
     /**
      * Creates new form main
      */
     public main() {
         initComponents();
+
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -385,6 +391,11 @@ public class main extends javax.swing.JFrame {
     private void btnLoadBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadBActionPerformed
         // TODO add your handling code here:
         this.imageB = ImageUtils.loadImage();
+
+        if (this.imageB == null) {
+            return;
+        }
+
         this.labelImageB.setIcon(new ImageIcon(imageB.getImage()));
     }//GEN-LAST:event_btnLoadBActionPerformed
 
@@ -398,12 +409,20 @@ public class main extends javax.swing.JFrame {
         Image imgBBinario = new Image(imageB.getBinaryImage());
 
         Image imgResultado = ImageUtils.doOperationInImages(imgABinario, imgBBinario, null, Operation.AND);
-        this.labelImageResult.setIcon(new ImageIcon(imgResultado.getMatrixImage()));
+        this.labelImageResult.setIcon(new ImageIcon(imgResultado.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_btnANDActionPerformed
 
     private boolean validateImgA() {
         if (imageA == null) {
             JOptionPane.showMessageDialog(null, "Escolha a Imagem A");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateImgB() {
+        if (imageB == null) {
+            JOptionPane.showMessageDialog(null, "Escolha a Imagem B");
             return false;
         }
         return true;
@@ -430,7 +449,7 @@ public class main extends javax.swing.JFrame {
         Image imgBBinario = new Image(imageB.getBinaryImage());
 
         Image imgResultado = ImageUtils.doOperationInImages(imgABinario, imgBBinario, null, Operation.OR);
-        this.labelImageResult.setIcon(new ImageIcon(imgResultado.getMatrixImage()));
+        this.labelImageResult.setIcon(new ImageIcon(imgResultado.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_btnORActionPerformed
 
     private void btnXORActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXORActionPerformed
@@ -443,7 +462,7 @@ public class main extends javax.swing.JFrame {
         Image imgBBinario = new Image(imageB.getBinaryImage());
 
         Image imgResultado = ImageUtils.doOperationInImages(imgABinario, imgBBinario, null, Operation.XOR);
-        this.labelImageResult.setIcon(new ImageIcon(imgResultado.getMatrixImage()));
+        this.labelImageResult.setIcon(new ImageIcon(imgResultado.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_btnXORActionPerformed
 
     private void btnNOTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNOTActionPerformed
@@ -461,8 +480,10 @@ public class main extends javax.swing.JFrame {
 
     private void btnLoadAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadAActionPerformed
         this.imageA = ImageUtils.loadImage();
-        this.labelImageA.setIcon(new ImageIcon(imageA.getImage()));
-
+        if (this.imageA == null) {
+            return;
+        }
+        this.labelImageA.setIcon(new ImageIcon(imageA.getImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_btnLoadAActionPerformed
 
     private void btnBinaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBinaryActionPerformed
@@ -477,7 +498,7 @@ public class main extends javax.swing.JFrame {
         if (!validateImgA()) {
             return;
         }
-        labelImageResult.setIcon(new ImageIcon(imageA.getGrayImage()));
+        labelImageResult.setIcon(new ImageIcon(imageA.getGrayImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_btnGrayScaleActionPerformed
 
     private void btnADCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnADCActionPerformed
@@ -489,14 +510,14 @@ public class main extends javax.swing.JFrame {
             }
 
             Image result = ImageUtils.doOperationInImages(imageA, imageB, null, Operation.SUM);
-            labelImageResult.setIcon(new ImageIcon(result.getMatrixImage()));
+            labelImageResult.setIcon(new ImageIcon(result.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
         } else {
             if (!validateImgA()) {
                 return;
             }
             int value = Integer.parseInt(txt);
             Image result = ImageUtils.doOperationInImage(imageA, value, null, Operation.SUM);
-            labelImageResult.setIcon(new ImageIcon(result.getMatrixImage()));
+            labelImageResult.setIcon(new ImageIcon(result.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
         }
     }//GEN-LAST:event_btnADCActionPerformed
 
@@ -513,7 +534,7 @@ public class main extends javax.swing.JFrame {
             }
 
             Image result = ImageUtils.doOperationInImages(imageA, imageB, null, Operation.SUBTRACT);
-            labelImageResult.setIcon(new ImageIcon(result.getMatrixImage()));
+            labelImageResult.setIcon(new ImageIcon(result.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
         } else {
             if (!validateImgA()) {
                 return;
@@ -533,14 +554,14 @@ public class main extends javax.swing.JFrame {
             }
 
             Image result = ImageUtils.doOperationInImages(imageA, imageB, null, Operation.DIVISION);
-            labelImageResult.setIcon(new ImageIcon(result.getMatrixImage()));
+            labelImageResult.setIcon(new ImageIcon(result.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
         } else {
             if (!validateImgA()) {
                 return;
             }
             int value = Integer.parseInt(txt);
             Image result = ImageUtils.doOperationInImage(imageA, value, null, Operation.DIVISION);
-            labelImageResult.setIcon(new ImageIcon(result.getMatrixImage()));
+            labelImageResult.setIcon(new ImageIcon(result.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
         }
     }//GEN-LAST:event_btnDIVActionPerformed
 
@@ -588,7 +609,7 @@ public class main extends javax.swing.JFrame {
         }
         Image result = ImageUtils.doOperationInImage(imageA, null, null, Operation.NEGATIVE);
 
-        labelImageResult.setIcon(new ImageIcon(result.getMatrixImage()));
+        labelImageResult.setIcon(new ImageIcon(result.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_btnNegativeActionPerformed
 
     private void btnMaxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaxActionPerformed
@@ -596,32 +617,32 @@ public class main extends javax.swing.JFrame {
         if (!validateImgA()) {
             return;
         }
-        Image image = ImageUtils.applyFilterInImage(this.imageA, 3, Operation.MAX);
-        this.labelImageResult.setIcon(new ImageIcon(image.getMatrixImage()));
+        Image image = ImageUtils.applyFilterInImage(this.imageA, 5, Operation.MAX);
+        this.labelImageResult.setIcon(new ImageIcon(image.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_btnMaxActionPerformed
 
     private void btnMinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinActionPerformed
         if (!validateImgA()) {
             return;
         }
-        Image image = ImageUtils.applyFilterInImage(this.imageA, 3, Operation.MIN);
-        this.labelImageResult.setIcon(new ImageIcon(image.getMatrixImage()));
+        Image image = ImageUtils.applyFilterInImage(this.imageA, 5, Operation.MIN);
+        this.labelImageResult.setIcon(new ImageIcon(image.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_btnMinActionPerformed
 
     private void btnMediaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMediaActionPerformed
         if (!validateImgA()) {
             return;
         }
-        Image image = ImageUtils.applyFilterInImage(this.imageA, 3, Operation.MEDIA);
-        this.labelImageResult.setIcon(new ImageIcon(image.getMatrixImage()));
+        Image image = ImageUtils.applyFilterInImage(this.imageA, 5, Operation.MEDIA);
+        this.labelImageResult.setIcon(new ImageIcon(image.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_btnMediaActionPerformed
 
     private void btnMedianaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMedianaActionPerformed
         if (!validateImgA()) {
             return;
         }
-        Image image = ImageUtils.applyFilterInImage(this.imageA, 3, Operation.MEDIANA);
-        this.labelImageResult.setIcon(new ImageIcon(image.getMatrixImage()));
+        Image image = ImageUtils.applyFilterInImage(this.imageA, 5, Operation.MEDIANA);
+        this.labelImageResult.setIcon(new ImageIcon(image.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_btnMedianaActionPerformed
 
     /**
