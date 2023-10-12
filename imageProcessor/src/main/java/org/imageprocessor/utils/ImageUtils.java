@@ -1,8 +1,11 @@
 package org.imageprocessor.utils;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -110,6 +113,48 @@ public class ImageUtils {
 
     public static int getMinValue(int value1, int value2) {
         return Math.min(value1, value2);
+    }
+
+    public static BufferedImage applyGaussianFilter(BufferedImage image, int size, double sigma) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+        double[][] kernel = getKernelGaussiano(size, sigma);
+
+        BufferedImage filteredImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+        int halfSize = size / 2;
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                double r = 0, g = 0, b = 0;
+
+                for (int j = -halfSize; j <= halfSize; j++) {
+                    for (int i = -halfSize; i <= halfSize; i++) {
+                        int posX = x + i;
+                        int posY = y + j;
+
+                        if (posX < 0 || posX >= width) {
+                            posX = x;
+                        }
+
+                        if (posY < 0 || posY >= height) {
+                            posY = y;
+                        }
+
+                        Color pixel = new Color(image.getRGB(posX, posY));
+
+                        r += pixel.getRed() * kernel[i + halfSize][j + halfSize];
+                        g += pixel.getGreen() * kernel[i + halfSize][j + halfSize];
+                        b += pixel.getBlue() * kernel[i + halfSize][j + halfSize];
+                    }
+                }
+
+                Color newPixel = new Color((int) r, (int) g, (int) b);
+                filteredImage.setRGB(x, y, newPixel.getRGB());
+            }
+        }
+
+        return filteredImage;
     }
 
     public static Image applyFilterInImage(Image image, int bounds, Operation operation, int position) {
@@ -245,5 +290,76 @@ public class ImageUtils {
             }
         }
         return result;
+    }
+
+    public static Map<Integer, Integer> getImageHistogram(Image image) {
+        Map<Integer, Integer> histogram = new HashMap<>();
+        for (int i = 0; i < 256; i++) {
+            histogram.put(i, 0);
+        }
+        int[][] grayMatrix = rgbToGray(image.getRed(), image.getGreen(), image.getBlue());
+        int width = grayMatrix.length;
+        int height = grayMatrix[0].length;
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int pixelValue = grayMatrix[x][y];
+                int histoCount = histogram.get(pixelValue);
+                histogram.put(pixelValue, histoCount + 1);
+            }
+        }
+        return histogram;
+    }
+
+    public static int[][] getEqualizedImage(Image image) {
+        Map<Integer, Integer> histogram = getImageHistogram(image);
+        int[][] grayMatrix = rgbToGray(image.getRed(), image.getGreen(), image.getBlue());
+
+        int width = grayMatrix.length;
+        int height = grayMatrix[0].length;
+        int[][] resultMatrix = new int[width][height];
+
+        int cfdMin = getCumulativeFrequency(histogram, 0);
+        int mxn = width * height;
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int cfd = getCumulativeFrequency(histogram, grayMatrix[x][y]);
+                double result = Math.floor((cfd - cfdMin / mxn - cfdMin) * (255 - 1));
+                resultMatrix[x][y] = (int) Math.round(result);
+            }
+        }
+        return resultMatrix;
+    }
+
+    private static int getCumulativeFrequency(Map<Integer, Integer> histogram, int value) {
+        int count = 0;
+        for (int i = 0; i < value; i++) {
+            count += histogram.get(i);
+        }
+        return count;
+    }
+
+    public static double[][] getKernelGaussiano(int size, double sigma) {
+        double[][] kernel = new double[size][size];
+        double sum = 0;
+        int halfSize = size / 2;
+
+        for (int y = -halfSize; y <= halfSize; y++) {
+            for (int x = -halfSize; x <= halfSize; x++) {
+                double exponent = -(x * x + y * y) / (2 * sigma * sigma);
+                double value = Math.exp(exponent) / (2 * Math.PI * sigma * sigma);
+                kernel[x + halfSize][y + halfSize] = value;
+                sum += value;
+            }
+        }
+
+        // Normalize the kernel
+        for (int y = -halfSize; y <= halfSize; y++) {
+            for (int x = -halfSize; x <= halfSize; x++) {
+                kernel[x + halfSize][y + halfSize] /= sum;
+            }
+        }
+
+        return kernel;
     }
 }

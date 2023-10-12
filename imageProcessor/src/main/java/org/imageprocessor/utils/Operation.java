@@ -240,10 +240,9 @@ public enum Operation {
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
                     Integer valorFoco = focus[x][y];
-                    if (valorFoco == null) {
-                        valorFoco = 0;
+                    if (valorFoco != null) {
+                        sumValue += valorFoco;
                     }
-                    sumValue += valorFoco;
                 }
             }
 
