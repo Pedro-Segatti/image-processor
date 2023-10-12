@@ -112,6 +112,14 @@ public class ImageUtils {
         return Math.min(value1, value2);
     }
 
+    public static Image applyFilterInImage(Image image, int bounds, Operation operation, int position) {
+        Image imageResult = new Image();
+        imageResult.setRed(filterSingleMatrix(image.getRed(), bounds, operation, position));
+        imageResult.setGreen(filterSingleMatrix(image.getGreen(), bounds, operation, position));
+        imageResult.setBlue(filterSingleMatrix(image.getBlue(), bounds, operation, position));
+        return imageResult;
+    }
+
     public static Image applyFilterInImage(Image image, int bounds, Operation operation) {
         Image imageResult = new Image();
         imageResult.setRed(filterSingleMatrix(image.getRed(), bounds, operation));
@@ -129,6 +137,21 @@ public class ImageUtils {
             for (int x = 0; x < width; x++) {
                 Integer[][] focus = getFocus(matrix, bounds, x, y);
                 filteredMatrix[x][y] = operation.getResult(focus, bounds);
+            }
+        }
+
+        return filteredMatrix;
+    }
+
+    private static int[][] filterSingleMatrix(int[][] matrix, Integer bounds, Operation operation, int position) {
+        int width = matrix.length;
+        int height = matrix[0].length;
+        int[][] filteredMatrix = new int[width][height];
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                Integer[][] focus = getFocus(matrix, bounds, x, y);
+                filteredMatrix[x][y] = operation.getResult(focus, bounds, position);
             }
         }
 

@@ -73,6 +73,9 @@ public class main extends javax.swing.JFrame {
         btnMin = new javax.swing.JButton();
         btnMedia = new javax.swing.JButton();
         btnMediana = new javax.swing.JButton();
+        btnOrdem = new javax.swing.JButton();
+        tFValueForOrdGau = new javax.swing.JTextField();
+        btnGaussian = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -221,6 +224,26 @@ public class main extends javax.swing.JFrame {
             }
         });
 
+        btnOrdem.setText("Ordem");
+        btnOrdem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrdemActionPerformed(evt);
+            }
+        });
+
+        tFValueForOrdGau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tFValueForOrdGauActionPerformed(evt);
+            }
+        });
+
+        btnGaussian.setText("Gaussiano");
+        btnGaussian.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGaussianActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout mainLayout = new javax.swing.GroupLayout(main);
         main.setLayout(mainLayout);
         mainLayout.setHorizontalGroup(
@@ -286,7 +309,13 @@ public class main extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(btnMin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnMedia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnMediana, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))))
+                            .addComponent(btnMediana, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                            .addGroup(mainLayout.createSequentialGroup()
+                                .addComponent(tFValueForOrdGau, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnGaussian, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnOrdem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                 .addContainerGap())
         );
         mainLayout.setVerticalGroup(
@@ -363,7 +392,14 @@ public class main extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnMedia, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnMediana, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnMediana, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(mainLayout.createSequentialGroup()
+                                .addComponent(btnOrdem, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnGaussian, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tFValueForOrdGau))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -405,10 +441,7 @@ public class main extends javax.swing.JFrame {
             return;
         }
 
-        Image imgABinario = new Image(imageA.getBinaryImage());
-        Image imgBBinario = new Image(imageB.getBinaryImage());
-
-        Image imgResultado = ImageUtils.doOperationInImages(imgABinario, imgBBinario, null, Operation.AND);
+        Image imgResultado = ImageUtils.doOperationInImages(this.imageA, this.imageB, null, Operation.AND);
         this.labelImageResult.setIcon(new ImageIcon(imgResultado.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_btnANDActionPerformed
 
@@ -491,7 +524,7 @@ public class main extends javax.swing.JFrame {
         if (!validateImgA()) {
             return;
         }
-        labelImageResult.setIcon(new ImageIcon(imageA.getBinaryImage()));
+        labelImageResult.setIcon(new ImageIcon(imageA.getBinaryImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_btnBinaryActionPerformed
 
     private void btnGrayScaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrayScaleActionPerformed
@@ -541,7 +574,7 @@ public class main extends javax.swing.JFrame {
             }
             int value = Integer.parseInt(txt);
             Image result = ImageUtils.doOperationInImage(imageA, value, null, Operation.SUBTRACT);
-            labelImageResult.setIcon(new ImageIcon(result.getMatrixImage()));
+            labelImageResult.setIcon(new ImageIcon(result.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
         }
     }//GEN-LAST:event_btnSUBActionPerformed
 
@@ -574,31 +607,31 @@ public class main extends javax.swing.JFrame {
             }
 
             Image result = ImageUtils.doOperationInImages(imageA, imageB, null, Operation.MULTIPLICATION);
-            labelImageResult.setIcon(new ImageIcon(result.getMatrixImage()));
+            labelImageResult.setIcon(new ImageIcon(result.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
         } else {
             if (!validateImgA()) {
                 return;
             }
             int value = Integer.parseInt(txt);
             Image result = ImageUtils.doOperationInImage(imageA, value, null, Operation.MULTIPLICATION);
-            labelImageResult.setIcon(new ImageIcon(result.getMatrixImage()));
+            labelImageResult.setIcon(new ImageIcon(result.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
         }
     }//GEN-LAST:event_btnMULActionPerformed
 
     private void btnBLENActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBLENActionPerformed
         // TODO add your handling code here:
-        if (!validateImgAAndB()) {
-            return;
-        }
-
         String txt = tFValueFor.getText();
         if (nullOrEmpty(txt)) {
-            Image result = ImageUtils.doOperationInImages(imageA, imageA, 0, Operation.BLENDING);
-            labelImageResult.setIcon(new ImageIcon(result.getMatrixImage()));
+            if (!validateImgAAndB()) {
+                return;
+            }
+
+            Image result = ImageUtils.doOperationInImages(imageA, imageB, 0, Operation.BLENDING);
+            labelImageResult.setIcon(new ImageIcon(result.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
         } else {
             int coeficient = Integer.parseInt(txt);
             Image result = ImageUtils.doOperationInImages(imageA, imageA, coeficient, Operation.BLENDING);
-            labelImageResult.setIcon(new ImageIcon(result.getMatrixImage()));
+            labelImageResult.setIcon(new ImageIcon(result.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
         }
     }//GEN-LAST:event_btnBLENActionPerformed
 
@@ -645,6 +678,28 @@ public class main extends javax.swing.JFrame {
         this.labelImageResult.setIcon(new ImageIcon(image.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_btnMedianaActionPerformed
 
+    private void btnOrdemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdemActionPerformed
+        if (!validateImgA()) {
+            return;
+        }
+
+        int order = 0;
+        if (!nullOrEmpty(this.tFValueForOrdGau.getText())) {
+            order = Integer.parseInt(this.tFValueForOrdGau.getText());
+        }
+
+        Image image = ImageUtils.applyFilterInImage(this.imageA, 5, Operation.ORDER, order);
+        this.labelImageResult.setIcon(new ImageIcon(image.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
+    }//GEN-LAST:event_btnOrdemActionPerformed
+
+    private void tFValueForOrdGauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tFValueForOrdGauActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tFValueForOrdGauActionPerformed
+
+    private void btnGaussianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGaussianActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGaussianActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -686,6 +741,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JButton btnBLEN;
     private javax.swing.JButton btnBinary;
     private javax.swing.JButton btnDIV;
+    private javax.swing.JButton btnGaussian;
     private javax.swing.JButton btnGrayScale;
     private javax.swing.JButton btnLoadA;
     private javax.swing.JButton btnLoadB;
@@ -697,6 +753,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JButton btnNOT;
     private javax.swing.JButton btnNegative;
     private javax.swing.JButton btnOR;
+    private javax.swing.JButton btnOrdem;
     private javax.swing.JButton btnSUB;
     private javax.swing.JButton btnXOR;
     private javax.swing.JLabel jLabel1;
@@ -711,6 +768,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel labelImageResult;
     private javax.swing.JPanel main;
     private javax.swing.JTextField tFValueFor;
+    private javax.swing.JTextField tFValueForOrdGau;
     private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
 }
