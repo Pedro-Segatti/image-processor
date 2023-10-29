@@ -331,6 +331,170 @@ public enum Operation {
 
             return valores.get(position);
         }
+    }, CONSERVATIVE_SUAVIZATION {
+        @Override
+        public int getResult(Integer[][] focus, int bounds) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public Integer getResult(Integer value1, Integer value2, Integer coeficient) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public int getResult(Integer[][] focus, int bounds, int position) {
+            int intensitySum = 0;
+            int weightSum = 0;
+            int width = focus.length;
+            int height = focus[0].length;
+
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    Integer valorFoco = focus[x][y];
+                    if (valorFoco == null) {
+                        continue;
+                    }
+                    int distance = (y * y + x * x);
+                    double weight = Math.exp(-distance / (2 * position * position));
+                    intensitySum += valorFoco * weight;
+                    weightSum += weight;
+                }
+            }
+
+            int resultIntensity = (int) (intensitySum / weightSum);
+            return resultIntensity;
+        }
+    }, BORDER_WITH_SOBEL {
+        @Override
+        public int getResult(Integer[][] focus, int bounds) {
+            int[][] sobelX = {{-1, 0, 1}, {-2, 0, 2}, {-1, 0, 1}};
+            int[][] sobelY = {{-1, -2, -1}, {0, 0, 0}, {1, 2, 1}};
+
+            int sumX = 0;
+            int sumY = 0;
+            int width = focus.length;
+            int height = focus[0].length;
+
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    for (int i = -1; i <= 1; i++) {
+                        for (int j = -1; j <= 1; j++) {
+                            int imageX = x + j;
+                            int imageY = y + i;
+
+                            if (imageX >= 0 && imageX < width && imageY >= 0 && imageY < height) {
+                                Integer valorFoco = focus[imageY][imageX];
+                                if (valorFoco == null) {
+                                    continue;
+                                }
+                                sumX += valorFoco * sobelX[i + 1][j + 1];
+                                sumY += valorFoco * sobelY[i + 1][j + 1];
+                            }
+                        }
+                    }
+                }
+            }
+
+            int magnitude = (int) Math.sqrt(sumX * sumX + sumY * sumY);
+
+            return magnitude;
+        }
+
+        @Override
+        public Integer getResult(Integer value1, Integer value2, Integer coeficient) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public int getResult(Integer[][] focus, int bounds, int position) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+    }, BORDER_WITH_PREWITT {
+        @Override
+        public int getResult(Integer[][] focus, int bounds) {
+            int[][] prewittX = {{-1, 0, 1}, {-1, 0, 1}, {-1, 0, 1}};
+            int[][] prewittY = {{-1, -1, -1}, {0, 0, 0}, {1, 1, 1}};
+
+            int sumX = 0;
+            int sumY = 0;
+            int width = focus.length;
+            int height = focus[0].length;
+
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    for (int i = -1; i <= 1; i++) {
+                        for (int j = -1; j <= 1; j++) {
+                            int imageX = x + j;
+                            int imageY = y + i;
+
+                            if (imageX >= 0 && imageX < width && imageY >= 0 && imageY < height) {
+                                Integer valorFoco = focus[imageY][imageX];
+                                if (valorFoco == null) {
+                                    continue;
+                                }
+                                sumX += valorFoco * prewittX[i + 1][j + 1];
+                                sumY += valorFoco * prewittY[i + 1][j + 1];
+                            }
+                        }
+                    }
+                }
+            }
+
+            int magnitude = (int) Math.sqrt(sumX * sumX + sumY * sumY);
+
+            return magnitude;
+        }
+
+        @Override
+        public Integer getResult(Integer value1, Integer value2, Integer coeficient) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public int getResult(Integer[][] focus, int bounds, int position) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+    }, BORDER_WITH_LAPLACIAN {
+        @Override
+        public int getResult(Integer[][] focus, int bounds) {
+            int[][] laplacianMask = {{0, 1, 0}, {1, -4, 1}, {0, 1, 0}};
+
+            int sum = 0;
+            int width = focus.length;
+            int height = focus[0].length;
+
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    for (int i = -1; i <= 1; i++) {
+                        for (int j = -1; j <= 1; j++) {
+                            int imageX = x + j;
+                            int imageY = y + i;
+
+                            if (imageX >= 0 && imageX < width && imageY >= 0 && imageY < height) {
+                                Integer valorFoco = focus[imageY][imageX];
+                                if (valorFoco == null) {
+                                    continue;
+                                }
+                                sum += valorFoco * laplacianMask[i + 1][j + 1];
+                            }
+                        }
+                    }
+                }
+            }
+
+            return sum;
+        }
+
+        @Override
+        public Integer getResult(Integer value1, Integer value2, Integer coeficient) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public int getResult(Integer[][] focus, int bounds, int position) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
     };
 
     public abstract Integer getResult(Integer value1, Integer value2, Integer coeficient);

@@ -85,6 +85,10 @@ public class main extends javax.swing.JFrame {
         btnEquaHist = new javax.swing.JButton();
         btnCalcHist = new javax.swing.JButton();
         labelHistogram = new javax.swing.JLabel();
+        btnSuavizacao = new javax.swing.JButton();
+        btnSobel = new javax.swing.JButton();
+        btnPrewitt = new javax.swing.JButton();
+        btnLaplaciano = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -271,6 +275,34 @@ public class main extends javax.swing.JFrame {
 
         labelHistogram.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        btnSuavizacao.setText("Suavização Consertiva");
+        btnSuavizacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuavizacaoActionPerformed(evt);
+            }
+        });
+
+        btnSobel.setText("Sobel");
+        btnSobel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSobelActionPerformed(evt);
+            }
+        });
+
+        btnPrewitt.setText("Prewitt");
+        btnPrewitt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrewittActionPerformed(evt);
+            }
+        });
+
+        btnLaplaciano.setText("Laplaciano");
+        btnLaplaciano.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLaplacianoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout mainLayout = new javax.swing.GroupLayout(main);
         main.setLayout(mainLayout);
         mainLayout.setHorizontalGroup(
@@ -307,12 +339,12 @@ public class main extends javax.swing.JFrame {
                         .addContainerGap(37, Short.MAX_VALUE)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 1188, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(mainLayout.createSequentialGroup()
-                        .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(37, 37, 37)
+                        .addComponent(title))
+                    .addGroup(mainLayout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(mainLayout.createSequentialGroup()
-                                .addGap(37, 37, 37)
-                                .addComponent(title))
-                            .addGroup(mainLayout.createSequentialGroup()
-                                .addGap(39, 39, 39)
                                 .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(mainLayout.createSequentialGroup()
                                         .addGap(7, 7, 7)
@@ -332,28 +364,32 @@ public class main extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnMax, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jSeparator4)
-                                    .addComponent(jLabel2)
-                                    .addComponent(btnMin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnMedia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnMediana, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                                    .addGroup(mainLayout.createSequentialGroup()
-                                        .addComponent(tFValueForOrdGau, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(btnGaussian, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(btnOrdem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnCalcHist, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
-                                    .addComponent(labelHistogram, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnEquaHist, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(btnMax, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jSeparator4)
+                                        .addComponent(jLabel2)
+                                        .addComponent(btnMin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnMedia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnMediana, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                                        .addGroup(mainLayout.createSequentialGroup()
+                                            .addComponent(tFValueForOrdGau, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(btnGaussian, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(btnOrdem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(btnSuavizacao, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnSobel, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnPrewitt, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnLaplaciano, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnCalcHist, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                            .addComponent(labelHistogram, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEquaHist, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         mainLayout.setVerticalGroup(
@@ -398,6 +434,7 @@ public class main extends javax.swing.JFrame {
                     .addGroup(mainLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator6)
                             .addGroup(mainLayout.createSequentialGroup()
                                 .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -441,9 +478,16 @@ public class main extends javax.swing.JFrame {
                                                 .addComponent(btnOrdem, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(btnGaussian, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(tFValueForOrdGau))))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jSeparator6))
+                                            .addComponent(tFValueForOrdGau))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnSuavizacao, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnSobel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnPrewitt, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnLaplaciano, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(mainLayout.createSequentialGroup()
                         .addGap(50, 50, 50)
@@ -452,7 +496,7 @@ public class main extends javax.swing.JFrame {
                             .addComponent(btnCalcHist, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(labelHistogram, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(136, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -782,6 +826,45 @@ public class main extends javax.swing.JFrame {
         labelHistogram.setIcon(new ImageIcon(img.getScaledInstance(310, 250, java.awt.Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_btnCalcHistActionPerformed
 
+    private void btnSuavizacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuavizacaoActionPerformed
+        if (!validateImgA()) {
+            return;
+        }
+
+        Image image = ImageUtils.applyFilterInImage(this.imageA, 5, Operation.CONSERVATIVE_SUAVIZATION);
+        this.labelImageResult.setIcon(new ImageIcon(image.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
+    }//GEN-LAST:event_btnSuavizacaoActionPerformed
+
+    private void btnSobelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSobelActionPerformed
+        if (!validateImgA()) {
+            return;
+        }
+
+        Image imgABinario = new Image(imageA.getBinaryImage());
+        Image image = ImageUtils.applyFilterInImage(imgABinario, 5, Operation.BORDER_WITH_SOBEL);
+        this.labelImageResult.setIcon(new ImageIcon(image.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
+    }//GEN-LAST:event_btnSobelActionPerformed
+
+    private void btnPrewittActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrewittActionPerformed
+        if (!validateImgA()) {
+            return;
+        }
+
+        Image imgABinario = new Image(imageA.getBinaryImage());
+        Image image = ImageUtils.applyFilterInImage(imgABinario, 5, Operation.BORDER_WITH_PREWITT);
+        this.labelImageResult.setIcon(new ImageIcon(image.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
+    }//GEN-LAST:event_btnPrewittActionPerformed
+
+    private void btnLaplacianoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaplacianoActionPerformed
+        if (!validateImgA()) {
+            return;
+        }
+
+        Image imgABinario = new Image(imageA.getBinaryImage());
+        Image image = ImageUtils.applyFilterInImage(imgABinario, 5, Operation.BORDER_WITH_LAPLACIAN);
+        this.labelImageResult.setIcon(new ImageIcon(image.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
+    }//GEN-LAST:event_btnLaplacianoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -827,6 +910,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JButton btnEquaHist;
     private javax.swing.JButton btnGaussian;
     private javax.swing.JButton btnGrayScale;
+    private javax.swing.JButton btnLaplaciano;
     private javax.swing.JButton btnLoadA;
     private javax.swing.JButton btnLoadB;
     private javax.swing.JButton btnMUL;
@@ -838,7 +922,10 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JButton btnNegative;
     private javax.swing.JButton btnOR;
     private javax.swing.JButton btnOrdem;
+    private javax.swing.JButton btnPrewitt;
     private javax.swing.JButton btnSUB;
+    private javax.swing.JButton btnSobel;
+    private javax.swing.JButton btnSuavizacao;
     private javax.swing.JButton btnXOR;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
