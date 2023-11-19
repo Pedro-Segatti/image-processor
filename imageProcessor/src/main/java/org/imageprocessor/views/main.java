@@ -541,7 +541,7 @@ public class main extends javax.swing.JFrame {
             return;
         }
 
-        this.labelImageB.setIcon(new ImageIcon(imageB.getImage()));
+        this.labelImageB.setIcon(new ImageIcon(imageB.getImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_btnLoadBActionPerformed
 
     private void btnANDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnANDActionPerformed
@@ -882,7 +882,7 @@ public class main extends javax.swing.JFrame {
         if (this.labelImageResult == null) {
             return;
         }
-        
+
         this.labelImageA.setIcon(this.labelImageResult.getIcon());
         this.labelImageResult.setIcon(null);
     }//GEN-LAST:event_btnReutilizarActionPerformed
