@@ -344,8 +344,8 @@ public enum Operation {
 
         @Override
         public int getResult(Integer[][] focus, int bounds, int position) {
-            int intensitySum = 0;
-            int weightSum = 0;
+            int intensitySum = 1;
+            int weightSum = 1;
             int width = focus.length;
             int height = focus[0].length;
 
@@ -495,6 +495,112 @@ public enum Operation {
         public int getResult(Integer[][] focus, int bounds, int position) {
             throw new UnsupportedOperationException("Not supported yet.");
         }
+    }, DILATION {
+        @Override
+        public Integer getResult(Integer value1, Integer value2, Integer coeficient) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        @Override
+        public int getResult(Integer[][] focus, int bounds) {
+            int[][] dilationKernel = {
+                {1, 1, 1},
+                {1, 1, 1},
+                {1, 1, 1}
+            };
+
+            int sum = 0;
+            int width = focus.length;
+            int height = focus[0].length;
+
+            for (int y = 1; y < height - 1; y++) {
+                for (int x = 1; x < width - 1; x++) {
+                    for (int i = -1; i <= 1; i++) {
+                        for (int j = -1; j <= 1; j++) {
+                            int imageX = x + j;
+                            int imageY = y + i;
+
+                            if (imageX >= 0 && imageX < width && imageY >= 0 && imageY < height) {
+                                Integer focusValue = focus[imageX][imageY];
+                                if (focusValue == null) {
+                                    continue;
+                                }
+                                if (dilationKernel[i + 1][j + 1] == 1 && focusValue > 0) {
+                                    sum = 255;
+                                    return sum;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return sum;
+        }
+
+        @Override
+        public int getResult(Integer[][] focus, int bounds, int position) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+    }, EROSION {
+        @Override
+        public Integer getResult(Integer value1, Integer value2, Integer coeficient) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        @Override
+        public int getResult(Integer[][] focus, int bounds) {
+            int[][] erosionKernel = {
+                {1, 1, 1},
+                {1, 1, 1},
+                {1, 1, 1}
+            };
+
+            int sum = 0;
+            int width = focus.length;
+            int height = focus[0].length;
+
+            for (int y = 1; y < height - 1; y++) {
+                for (int x = 1; x < width - 1; x++) {
+                    boolean erode = true;
+
+                    for (int i = -1; i <= 1; i++) {
+                        for (int j = -1; j <= 1; j++) {
+                            int imageX = x + j;
+                            int imageY = y + i;
+
+                            if (imageX >= 0 && imageX < width && imageY >= 0 && imageY < height) {
+                                Integer focusValue = focus[imageX][imageY];
+                                if (focusValue == null || (erosionKernel[i + 1][j + 1] == 1 && focusValue == 0)) {
+                                    erode = false;
+                                    break;
+                                }
+                            } else {
+                                erode = false;
+                                break;
+                            }
+                        }
+                        if (!erode) {
+                            break;
+                        }
+                    }
+
+                    if (erode) {
+                        sum = 255; // 255 representa branco, ajuste conforme necessário
+                        return sum;
+                    }
+                }
+            }
+
+            return sum;
+        }
+
+        @Override
+        public int getResult(Integer[][] focus, int bounds, int position) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
     };
 
     public abstract Integer getResult(Integer value1, Integer value2, Integer coeficient);

@@ -47,6 +47,7 @@ public class main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
         main = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         title = new javax.swing.JLabel();
@@ -90,6 +91,8 @@ public class main extends javax.swing.JFrame {
         btnPrewitt = new javax.swing.JButton();
         btnLaplaciano = new javax.swing.JButton();
         btnReutilizar = new javax.swing.JButton();
+        btnDilatacao = new javax.swing.JButton();
+        btnErosao = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -311,6 +314,20 @@ public class main extends javax.swing.JFrame {
             }
         });
 
+        btnDilatacao.setText("Dilatação");
+        btnDilatacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDilatacaoActionPerformed(evt);
+            }
+        });
+
+        btnErosao.setText("Erosão");
+        btnErosao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnErosaoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout mainLayout = new javax.swing.GroupLayout(main);
         main.setLayout(mainLayout);
         mainLayout.setHorizontalGroup(
@@ -391,8 +408,14 @@ public class main extends javax.swing.JFrame {
                                                 .addComponent(btnOrdem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                                     .addComponent(btnSuavizacao, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnSobel, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(btnPrewitt, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnLaplaciano, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(mainLayout.createSequentialGroup()
+                                .addComponent(btnDilatacao, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnPrewitt, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(mainLayout.createSequentialGroup()
+                                .addComponent(btnErosao, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnLaplaciano, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -497,9 +520,13 @@ public class main extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(btnSobel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnPrewitt, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(btnPrewitt, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnDilatacao, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnLaplaciano, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(btnLaplaciano, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnErosao, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(mainLayout.createSequentialGroup()
@@ -512,20 +539,22 @@ public class main extends javax.swing.JFrame {
                         .addContainerGap(136, Short.MAX_VALUE))))
         );
 
+        jScrollPane1.setViewportView(main);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(main, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(main, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 840, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -617,7 +646,7 @@ public class main extends javax.swing.JFrame {
         Image imgBBinario = new Image(imageB.getBinaryImage());
 
         Image imgResultado = ImageUtils.doOperationInImages(imgABinario, imgBBinario, null, Operation.NOT);
-        this.labelImageResult.setIcon(new ImageIcon(imgResultado.getMatrixImage()));
+        this.labelImageResult.setIcon(new ImageIcon(imgResultado.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_btnNOTActionPerformed
 
     private void btnLoadAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadAActionPerformed
@@ -844,7 +873,7 @@ public class main extends javax.swing.JFrame {
             return;
         }
 
-        Image image = ImageUtils.applyFilterInImage(this.imageA, 5, Operation.CONSERVATIVE_SUAVIZATION);
+        Image image = ImageUtils.applyFilterInImage(this.imageA, 5, Operation.CONSERVATIVE_SUAVIZATION, 1);
         this.labelImageResult.setIcon(new ImageIcon(image.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_btnSuavizacaoActionPerformed
 
@@ -886,6 +915,26 @@ public class main extends javax.swing.JFrame {
         this.labelImageA.setIcon(this.labelImageResult.getIcon());
         this.labelImageResult.setIcon(null);
     }//GEN-LAST:event_btnReutilizarActionPerformed
+
+    private void btnDilatacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDilatacaoActionPerformed
+        if (!validateImgA()) {
+            return;
+        }
+
+        Image imgABinario = new Image(imageA.getBinaryImage());
+        Image image = ImageUtils.applyFilterInImage(imgABinario, 5, Operation.DILATION);
+        this.labelImageResult.setIcon(new ImageIcon(image.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
+    }//GEN-LAST:event_btnDilatacaoActionPerformed
+
+    private void btnErosaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnErosaoActionPerformed
+        if (!validateImgA()) {
+            return;
+        }
+
+        Image imgABinario = new Image(imageA.getBinaryImage());
+        Image image = ImageUtils.applyFilterInImage(imgABinario, 5, Operation.EROSION);
+        this.labelImageResult.setIcon(new ImageIcon(image.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
+    }//GEN-LAST:event_btnErosaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -929,7 +978,9 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JButton btnBinary;
     private javax.swing.JButton btnCalcHist;
     private javax.swing.JButton btnDIV;
+    private javax.swing.JButton btnDilatacao;
     private javax.swing.JButton btnEquaHist;
+    private javax.swing.JButton btnErosao;
     private javax.swing.JButton btnGaussian;
     private javax.swing.JButton btnGrayScale;
     private javax.swing.JButton btnLaplaciano;
@@ -952,6 +1003,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JButton btnXOR;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
