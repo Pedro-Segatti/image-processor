@@ -34,7 +34,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="840" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="940" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -150,8 +150,13 @@
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="btnPrewitt" min="-2" pref="250" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="btnErosao" min="-2" pref="250" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Component id="btnOpening" min="-2" pref="250" max="-2" attributes="0"/>
+                                          <Component id="btnErosao" min="-2" pref="250" max="-2" attributes="0"/>
+                                          <Component id="btnClosure" alignment="1" min="-2" pref="250" max="-2" attributes="0"/>
+                                          <Component id="btnContour" alignment="1" min="-2" pref="250" max="-2" attributes="0"/>
+                                      </Group>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="btnLaplaciano" min="-2" pref="250" max="-2" attributes="0"/>
                                   </Group>
@@ -293,6 +298,12 @@
                                           <Component id="btnLaplaciano" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                                           <Component id="btnErosao" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                                       </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="btnOpening" min="-2" pref="32" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="btnClosure" min="-2" pref="32" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="btnContour" min="-2" pref="32" max="-2" attributes="0"/>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
@@ -306,7 +317,7 @@
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="labelHistogram" min="-2" pref="250" max="-2" attributes="0"/>
-                              <EmptySpace pref="136" max="32767" attributes="0"/>
+                              <EmptySpace pref="238" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -632,6 +643,30 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnErosaoActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnOpening">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Abertura"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOpeningActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnClosure">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Fechamento"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClosureActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnContour">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Contorno"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnContourActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

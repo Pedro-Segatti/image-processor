@@ -601,6 +601,55 @@ public enum Operation {
             throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         }
 
+    }, CONTOUR {
+        @Override
+        public Integer getResult(Integer value1, Integer value2, Integer coeficient) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        @Override
+        public int getResult(Integer[][] focus, int bounds) {
+            // Copiar a imagem original
+            Integer[][] originalImage = new Integer[focus.length][focus[0].length];
+            for (int y = 0; y < focus[0].length; y++) {
+                System.arraycopy(focus[y], 0, originalImage[y], 0, focus.length);
+            }
+
+            // Realizar a operação de erosão
+            Integer[][] erosionResult = new Integer[focus.length][focus[0].length];
+            for (int y = 0; y < focus[0].length; y++) {
+                for (int x = 0; x < focus.length; x++) {
+                    Integer result = EROSION.getResult(focus, bounds);
+                    erosionResult[x][y] = result;
+                }
+            }
+
+            // Calcular a diferença entre a imagem original e a imagem erodida
+            int sum = 0;
+            int width = focus.length;
+            int height = focus[0].length;
+
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    int originalValue = originalImage[x][y] != null ? originalImage[x][y] : 0;
+                    int erosionValue = erosionResult[x][y] != null ? erosionResult[x][y] : 0;
+                    int difference = originalValue - erosionValue;
+
+                    if (difference != 0) {
+                        sum = 255; // 255 representa branco, ajuste conforme necessário
+                        return sum;
+                    }
+                }
+            }
+
+            return sum;
+        }
+
+        @Override
+        public int getResult(Integer[][] focus, int bounds, int position) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
     };
 
     public abstract Integer getResult(Integer value1, Integer value2, Integer coeficient);

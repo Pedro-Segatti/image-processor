@@ -93,6 +93,9 @@ public class main extends javax.swing.JFrame {
         btnReutilizar = new javax.swing.JButton();
         btnDilatacao = new javax.swing.JButton();
         btnErosao = new javax.swing.JButton();
+        btnOpening = new javax.swing.JButton();
+        btnClosure = new javax.swing.JButton();
+        btnContour = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -328,6 +331,27 @@ public class main extends javax.swing.JFrame {
             }
         });
 
+        btnOpening.setText("Abertura");
+        btnOpening.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOpeningActionPerformed(evt);
+            }
+        });
+
+        btnClosure.setText("Fechamento");
+        btnClosure.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClosureActionPerformed(evt);
+            }
+        });
+
+        btnContour.setText("Contorno");
+        btnContour.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnContourActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout mainLayout = new javax.swing.GroupLayout(main);
         main.setLayout(mainLayout);
         mainLayout.setHorizontalGroup(
@@ -413,7 +437,11 @@ public class main extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(btnPrewitt, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(mainLayout.createSequentialGroup()
-                                .addComponent(btnErosao, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnOpening, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnErosao, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnClosure, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnContour, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addComponent(btnLaplaciano, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -527,6 +555,12 @@ public class main extends javax.swing.JFrame {
                                 .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(btnLaplaciano, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnErosao, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnOpening, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnClosure, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnContour, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(mainLayout.createSequentialGroup()
@@ -536,7 +570,7 @@ public class main extends javax.swing.JFrame {
                             .addComponent(btnCalcHist, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(labelHistogram, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(136, Short.MAX_VALUE))))
+                        .addContainerGap(238, Short.MAX_VALUE))))
         );
 
         jScrollPane1.setViewportView(main);
@@ -554,7 +588,7 @@ public class main extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 840, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 940, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -936,6 +970,38 @@ public class main extends javax.swing.JFrame {
         this.labelImageResult.setIcon(new ImageIcon(image.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
     }//GEN-LAST:event_btnErosaoActionPerformed
 
+    private void btnOpeningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpeningActionPerformed
+        if (!validateImgA()) {
+            return;
+        }
+
+        Image imgABinario = new Image(imageA.getBinaryImage());
+        Image image = ImageUtils.applyFilterInImage(imgABinario, 5, Operation.EROSION);
+        image = ImageUtils.applyFilterInImage(image, 5, Operation.DILATION);
+        this.labelImageResult.setIcon(new ImageIcon(image.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
+    }//GEN-LAST:event_btnOpeningActionPerformed
+
+    private void btnClosureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClosureActionPerformed
+        if (!validateImgA()) {
+            return;
+        }
+
+        Image imgABinario = new Image(imageA.getBinaryImage());
+        Image image = ImageUtils.applyFilterInImage(imgABinario, 5, Operation.DILATION);
+        image = ImageUtils.applyFilterInImage(image, 5, Operation.EROSION);
+        this.labelImageResult.setIcon(new ImageIcon(image.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
+    }//GEN-LAST:event_btnClosureActionPerformed
+
+    private void btnContourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContourActionPerformed
+        if (!validateImgA()) {
+            return;
+        }
+
+        Image imgABinario = new Image(imageA.getBinaryImage());
+        Image image = ImageUtils.applyFilterInImage(imgABinario, 5, Operation.CONTOUR);
+        this.labelImageResult.setIcon(new ImageIcon(image.getMatrixImage().getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH)));
+    }//GEN-LAST:event_btnContourActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -977,6 +1043,8 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JButton btnBLEN;
     private javax.swing.JButton btnBinary;
     private javax.swing.JButton btnCalcHist;
+    private javax.swing.JButton btnClosure;
+    private javax.swing.JButton btnContour;
     private javax.swing.JButton btnDIV;
     private javax.swing.JButton btnDilatacao;
     private javax.swing.JButton btnEquaHist;
@@ -994,6 +1062,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JButton btnNOT;
     private javax.swing.JButton btnNegative;
     private javax.swing.JButton btnOR;
+    private javax.swing.JButton btnOpening;
     private javax.swing.JButton btnOrdem;
     private javax.swing.JButton btnPrewitt;
     private javax.swing.JButton btnReutilizar;
