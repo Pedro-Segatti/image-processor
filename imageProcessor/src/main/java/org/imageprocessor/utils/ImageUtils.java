@@ -212,6 +212,8 @@ public class ImageUtils {
                 int posFocusY = posY + (y - bounds);
                 if (isPositionValid(matrix, posFocusX, posFocusY)) {
                     focus[x][y] = matrix[posFocusX][posFocusY];
+                } else {
+                    focus[x][y] = matrix[posX][posY];
                 }
             }
         }
